@@ -1,0 +1,137 @@
+/* Fondo con desenfoque */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Modal de tipo glassmorphism */
+.modal-contenido {
+  background: rgba(255, 255, 255, 0.15);
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  border-radius: 20px;
+  padding: 30px;
+  width: auto;
+  max-width: 480px;
+  color: #fff;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  animation: fadeInUp 0.4s ease;
+}
+
+.modal-contenido form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* Título del modal */
+.modal-contenido h2 {
+  margin-bottom: 20px;
+  font-size: 26px;
+  text-align: center;
+  color: #fff;
+}
+
+/* Animación elegante */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Inputs estilizados */
+.modal-contenido input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+.modal-contenido input::placeholder {
+  color: #e0e0e0;
+}
+
+.modal-contenido input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid #90caf9;
+}
+
+/* Botones del modal */
+.modal-botones {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.submit-btn,
+.cancelar-btn {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Botón Guardar */
+.submit-btn {
+  background: linear-gradient(135deg, #00c853, #64dd17);
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 200, 83, 0.4);
+}
+
+.submit-btn:hover {
+  background: linear-gradient(135deg, #00b248, #76ff03);
+}
+
+/* Botón Cancelar */
+.cancelar-btn {
+  background: linear-gradient(135deg, #d32f2f, #ef5350);
+  color: white;
+  box-shadow: 0 4px 15px rgba(211, 47, 47, 0.4);
+}
+
+.cancelar-btn:hover {
+  background: linear-gradient(135deg, #c62828, #e57373);
+}
+
+/* Botón para abrir el modal */
+.crear-btn {
+  background: linear-gradient(to right, #3f51b5, #5c6bc0);
+  color: #fff;
+  border: none;
+  padding: auto;
+  margin: 15px;
+  font-size: 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  box-shadow: 0 4px 12px rgba(63, 81, 181, 0.4);
+}
+
+.crear-btn:hover {
+  background: linear-gradient(to right, #3949ab, #7986cb);
+}

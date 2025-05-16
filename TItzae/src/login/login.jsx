@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/preview.jpg"
+import logo from "../assets/preview.jpg";
 import Swal from 'sweetalert2';
-import './login.css'
-
+import './login.css';
 
 const Toast = Swal.mixin({
   toast: true,
@@ -17,11 +16,12 @@ const Toast = Swal.mixin({
   }
 });
 
+export var nombreU = undefined;
+
 const Login = () => {
   const navigate = useNavigate();
   const [dni, setDni] = useState("");
   const [contrasena, setContrasena] = useState("");
-  const [mensaje, setMensaje] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,29 +36,39 @@ const Login = () => {
       });
 
       const data = await res.json();
-      
+
       if (res.ok && data.token) {
         localStorage.setItem("token", data.token);
+
         Toast.fire({
-        icon: "success",
-        title: "Logeado exitosamente",
-});
-  setTimeout(() => {
-    navigate("/store");
-  }, 1000);
-} else {
-        setMensaje(data.message || "Credenciales inválidas");
+          icon: "success",
+          title: "Logeado exitosamente",
+        });
+
+        setTimeout(() => {
+          navigate("/home");
+        }, 1000);
+      } else {
+        Toast.fire({
+          icon: "error",
+          title: "Error al iniciar sesión",
+        });
       }
     } catch (err) {
       console.error(err);
-      setMensaje("Error de conexión con el servidor");
+      Swal.fire({
+        icon: "error",
+        title: "Error de conexión",
+        text: "No se pudo conectar con el servidor",
+        confirmButtonColor: "#d33"
+      });
     }
   };
 
   return (
     <div className="form">
       <form className="formM" onSubmit={handleSubmit}>
-        <img className="logo" src={logo} alt="" />
+        <img className="logo" src={logo} alt="imagen" />
         <input
           type="text"
           placeholder="DNI"
@@ -75,9 +85,8 @@ const Login = () => {
         />
         <button type="submit">Ingresar</button>
       </form>
-      {mensaje && <p>{mensaje}</p>}
     </div>
   );
-}
+};
 
 export default Login;
