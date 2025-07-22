@@ -1,0 +1,32 @@
+name: CI - Frontend
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Clonar el repositorio
+      uses: actions/checkout@v3
+
+    - name: Usar Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Instalar dependencias
+      run: npm install
+      working-directory: ./TItzae
+
+    - name: Ejecutar tests
+      run: npm test
+      working-directory: ./TItzae
+
+    - name: Build del proyecto
+      run: npm run build
+      working-directory: ./TItzae
