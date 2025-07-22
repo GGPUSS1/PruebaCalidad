@@ -1,0 +1,125 @@
+.ventas-main {
+  flex: 1;
+  padding: 30px;
+  background-color: #f9fafb;
+  overflow-y: auto;
+}
+
+.ventas-title {
+  font-size: 2rem;
+  margin-top: -23px;
+  margin-bottom: 10px;
+  color: #1f2937;
+}
+
+.ventas-resumen {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.resumen-card {
+  background: #ffffff;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  flex: 1;
+  min-width: 200px;
+  text-align: center;
+}
+
+.resumen-card h4 {
+  color: #2563eb;
+  margin-bottom: 0.5rem;
+}
+
+.resumen-card p {
+  font-size: 1.2rem;
+  margin: 0.25rem 0;
+}
+
+.ventas-contenedor {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.ventas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+  flex: 2;
+}
+
+.venta-card {
+  background: #ffffff;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.venta-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.venta-card h4 {
+  margin-bottom: 0.5rem;
+  color: #111827;
+}
+
+.detalle-card {
+  background: #ffffff;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 300px;
+  max-width: 400px;
+  height: fit-content;
+}
+
+.detalle-card h3 {
+  color: #2563eb;
+  margin-bottom: 1rem;
+}
+
+.detalle-card ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.detalle-card li {
+  margin: 0.25rem 0;
+}
+
+.paginacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.paginacion button {
+  background-color: #2563eb;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.paginacion button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.paginacion span {
+  font-weight: bold;
+  color: #1f2937;
+}

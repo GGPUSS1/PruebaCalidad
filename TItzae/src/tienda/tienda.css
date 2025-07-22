@@ -2,14 +2,14 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden; /* Elimina el scroll global */
+  overflow: hidden; /* Evita el scroll global */
   font-family: 'Segoe UI', sans-serif;
 }
 
 /* Layout base */
 .layout {
   display: flex;
-  height: 100vh; /* Usa toda la altura del navegador */
+  height: 100vh; /* Altura completa del viewport */
   background-color: #f0f2f5;
   overflow: hidden;
 }
@@ -112,35 +112,36 @@ html, body {
   border-color: #007bff;
 }
 
+/* Lista de productos */
 .products-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 25px;
   padding: 30px;
   overflow-y: auto;
-  min-height: 500px; /* <-- mantiene el espacio aunque se filtren elementos */
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  min-height: 320px; /* Mantiene espacio aunque se filtren productos */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
 }
 
 .products-list::-webkit-scrollbar {
-  display: none;
+  display: none; /* Chrome, Safari y Opera */
 }
 
 .product-card {
-  height: 370px; /* o el tamaño que quieras, que se vea bien */
+  height: 370px; /* Altura fija para uniformidad */
   background: #fdfdfd;
   border: 2px solid #eaeaea;
   border-radius: 10px;
-  margin-bottom: 10px;
   padding: 30px;
   text-align: center;
-  transition: box-shadow 0.2s ease;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  margin-bottom: 10px;
 }
 
 .product-card:hover {
-  box-shadow: 0 4px 16px whitesmoke;
   transform: scale(1.04);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.1);
 }
 
 .product-card img {
@@ -172,11 +173,8 @@ html, body {
   min-height: 40px;
 }
 
-.add-to-cart-btn:hover {
-  background-color: #1565c0;
-}
-
-.crear-btn {
+/* Botón para agregar */
+.crear-btn, .add-to-cart-btn {
   padding: 0.6rem 1.2rem;
   background-color: #28a745;
   color: white;
@@ -187,6 +185,11 @@ html, body {
   transition: background-color 0.2s ease;
 }
 
+.add-to-cart-btn:hover, .crear-btn:hover {
+  background-color: #1565c0;
+}
+
+/* Botones de edición y borrado */
 .product-buttons {
   margin-top: 10px;
   display: flex;
@@ -200,14 +203,341 @@ html, body {
   border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
+  color: white;
+  transition: background-color 0.2s ease;
 }
 
 .btn-edit {
   background-color: #f0ad4e;
-  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #ec971f;
 }
 
 .btn-delete {
   background-color: #d9534f;
+}
+
+.btn-delete:hover {
+  background-color: #c9302c;
+}
+
+/* Notificación de bajo stock */
+.notificacion-bajo-stock {
+  position: relative;
+  margin-left: 1rem;
+  cursor: pointer;
+  width: 42px;
+  height: 42px;
+  background-color: #f5f5f5;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.notificacion-bajo-stock:hover {
+  background-color: #e0e0e0;
+  transform: scale(1.05);
+}
+
+.campana-icono {
+  font-size: 22px;
+  color: #333;
+}
+
+/* Badge de notificación */
+.notificacion-badge {
+  position: absolute;
+  top: -4px;
+  right: -2px;
+  background-color: #ff2d55;
   color: white;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 3px 6px;
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+  animation: popIn 0.3s ease forwards;
+}
+
+/* Animación para badge */
+@keyframes popIn {
+  0% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  80% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Modal overlay alternativo */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(20, 20, 20, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(6px);
+  animation: fadeInModal 0.3s ease forwards;
+}
+
+/* Contenedor modal alternativo */
+.modal-notificaciones {
+  background: #ffffff;
+  padding: 30px 25px;
+  width: 320px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #2c3e50;
+  animation: scaleUpModal 0.25s ease forwards;
+}
+
+/* Título del modal */
+.modal-notificaciones h3 {
+  margin: 0 0 20px;
+  font-weight: 700;
+  font-size: 1.4rem;
+  letter-spacing: 0.05em;
+  color: #34495e;
+  text-transform: uppercase;
+  border-bottom: 2px solid #27ae60;
+  padding-bottom: 8px;
+}
+
+/* Lista de notificaciones */
+.modal-notificaciones ul {
+  max-height: 180px;
+  overflow-y: auto;
+  padding-left: 20px;
+  margin-bottom: 25px;
+  color: #555;
+  font-size: 0.95rem;
+  text-align: left;
+  scrollbar-width: thin;
+  scrollbar-color: #27ae60 #d7f0e3;
+}
+
+.modal-notificaciones ul::-webkit-scrollbar {
+  width: 7px;
+}
+
+.modal-notificaciones ul::-webkit-scrollbar-thumb {
+  background-color: #27ae60;
+  border-radius: 10px;
+}
+
+.modal-notificaciones ul::-webkit-scrollbar-track {
+  background-color: #d7f0e3;
+  border-radius: 10px;
+}
+
+/* Botón cerrar alternativo */
+.modal-notificaciones button {
+  background-color: #27ae60;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  font-size: 1rem;
+  box-shadow: 0 6px 12px rgba(39, 174, 96, 0.4);
+}
+
+.modal-notificaciones button:hover {
+  background-color: #1e8449;
+  box-shadow: 0 8px 15px rgba(30, 132, 73, 0.6);
+}
+
+/* Animación para aparición del modal */
+@keyframes fadeInModal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleUpModal {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Animación shake (no aplicada, por si quieres usar) */
+@keyframes shake {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(10deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(-10deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* Contenedor de la paginación */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  gap: 8px;
+  user-select: none;
+}
+
+/* Botones de página */
+.pagination button {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  color: #333;
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Botón activo */
+.pagination button.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+  font-weight: bold;
+}
+
+/* Efecto hover */
+.pagination button:hover:not(.active) {
+  background-color: #e0e0e0;
+}
+
+/* Botones deshabilitados */
+.pagination button:disabled {
+  background-color: #ddd;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+/* Meta viewport para HTML - asegurarte que está en tu index.html */
+/* <meta name="viewport" content="width=device-width, initial-scale=1" /> */
+
+/* --- Responsive --- */
+@media (max-width: 1024px) {
+  .layout {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    padding: 20px 15px;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 10px;
+  }
+
+  .sidebar-nav {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .sidebar-nav li {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  .tienda-container {
+    height: auto;
+  }
+
+  .buscador-container {
+    width: 90%;
+    margin-left: 0;
+    justify-content: center;
+  }
+
+  .products-list {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    padding: 15px;
+    gap: 15px;
+  }
+
+  .product-card {
+    height: auto;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    flex-direction: column;
+    height: auto;
+    width: 100%;
+    padding: 15px 10px;
+  }
+
+  .sidebar-header {
+    flex-direction: row;
+    gap: 15px;
+    justify-content: flex-start;
+  }
+
+  .sidebar-logo {
+    width: 40px;
+  }
+
+  .sidebar-title {
+    font-size: 1rem;
+  }
+
+  .sidebar-nav {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .buscador-container {
+    width: 100%;
+    margin-left: 0;
+    flex-wrap: wrap;
+  }
+
+  .buscador-input {
+    flex: 1 1 100%;
+    margin-bottom: 10px;
+  }
+
+  .products-list {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+    padding: 10px;
+  }
+
+  .product-card {
+    padding: 15px;
+    height: auto;
+  }
+
+  .product-card img {
+    height: 140px;
+  }
 }

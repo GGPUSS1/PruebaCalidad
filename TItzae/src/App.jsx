@@ -4,6 +4,7 @@ import { Tienda } from "./tienda/tienda";
 import Login from "./login/login";
 import RutaPrivada from "./components/routeSafe";
 import Home from "./tienda/Home/Home";
+import Venta from "./tienda/ventas/ventas";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<RutaPrivada></RutaPrivada>} />
         <Route path="/home" element={<RutaPrivada><Home /></RutaPrivada>} /> 
         <Route path="/store" element={<RutaPrivada><Tienda /></RutaPrivada>} />
+        <Route path="/ventas" element={<RutaPrivada><Venta /></RutaPrivada>} />
       </Routes>
     </BrowserRouter>
   );
